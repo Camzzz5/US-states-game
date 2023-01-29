@@ -22,10 +22,7 @@ while len(correct_guesses) <= 50:
         correct_guesses.append(answer_state)
         score = len(correct_guesses)
     elif answer_state == "Exit":
-        all_states = set(list_of_states)
-        states_answered = set(correct_guesses)
-        states_not_answered = all_states - states_answered
-        print(states_answered)
+        states_not_answered = [i for i in list_of_states if i not in correct_guesses]
         data3 = pd.DataFrame(list(states_not_answered))
         data3.to_csv("Missing_states.csv")
         break
