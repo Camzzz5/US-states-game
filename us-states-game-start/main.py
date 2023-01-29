@@ -9,27 +9,26 @@ turtle.shape(image)
 data = pd.read_csv("50_states.csv")
 a = None
 correct_guesses = []
-
+list_of_states = data.state.to_list()
 while len(correct_guesses) <= 50:
     answer_state = screen.textinput(title=f"{len(correct_guesses)}/50 states", prompt="What's another state name?").title()
-    for i in data.state.to_list():
-        if i == answer_state:
-            tim = turtle.Turtle()
-            tim.pu()
-            tim.ht()
-            state_data = data[data.state == answer_state]
-            tim.goto(int(state_data.x), int(state_data.y))
-            tim.write(answer_state)
-            correct_guesses.append(i)
-            score = len(correct_guesses)
-    print(a)
-            
-            
-
-
-
-
-
+    if answer_state in list_of_states:
+        tim = turtle.Turtle()
+        tim.pu()
+        tim.ht()
+        state_data = data[data.state == answer_state]
+        tim.goto(int(state_data.x), int(state_data.y))
+        tim.write(answer_state)
+        correct_guesses.append(answer_state)
+        score = len(correct_guesses)
+    elif answer_state == "Exit":
+        all_states = set(list_of_states)
+        states_answered = set(correct_guesses)
+        states_not_answered = all_states - states_answered
+        print(states_answered)
+        data3 = pd.DataFrame(list(states_not_answered))
+        data3.to_csv("Missing_states.csv")
+        break
 
 
 screen.exitonclick()
